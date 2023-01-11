@@ -1,10 +1,8 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 
-app.get("/", (req, res) => {
-    res.status(200).json({
-        message: "Ok",
-    });
-});
+// middlewares.
+app.use(express.static(path.join(__dirname, "public")));
 
 module.exports = app;
