@@ -17,6 +17,11 @@ io.on("connection", (socket) => {
         "alert",
         `User with the id: ${socket.id} has joined the chat.`
     );
+
+    socket.on("message", (message) => {
+        io.emit("message", `Got message: ${message} From ${socket.id}`);
+    });
+
     socket.on("disconnect", () => {
         io.emit("alert", `User with the id: ${socket.id} has left the chat.`);
     });
