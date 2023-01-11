@@ -31,6 +31,7 @@ const ChatApp = ({ username }) => {
 
     useEffect(() => {
         socket.connect();
+        // eslint-disable-next-line
     }, []);
 
     return (
