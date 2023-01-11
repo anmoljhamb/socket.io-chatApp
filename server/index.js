@@ -28,11 +28,16 @@ io.on("connection", (socket) => {
     );
 
     socket.on("message", (message) => {
-        io.emit("message", message, { id: socket.id });
+        console.log(message);
+        // io.emit("message", message, { id: socket.id });
     });
 
     socket.on("disconnect", () => {
         io.emit("alert", `User with the id: ${socket.id} has left the chat.`);
+    });
+
+    socket.onAny((event, ...args) => {
+        console.log(event, ...args);
     });
 });
 
