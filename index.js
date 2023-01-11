@@ -19,7 +19,7 @@ io.on("connection", (socket) => {
     );
 
     socket.on("message", (message) => {
-        io.emit("message", `Got message: ${message} From ${socket.id}`);
+        io.emit("message", message, { id: socket.id });
     });
 
     socket.on("disconnect", () => {
