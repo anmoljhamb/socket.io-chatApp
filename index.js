@@ -12,9 +12,13 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 io.on("connection", (socket) => {
-    console.log(`New User Connected with id: ${socket.id}`);
+    socket.emit("alert", "Welcome to the ChatApp");
+    socket.broadcast.emit(
+        "alert",
+        `User with the id: ${socket.id} has joined the chat.`
+    );
     socket.on("disconnect", () => {
-        console.log(`User with id ${socket.id} disconnected.`);
+        io.emit("alert", `User with the id: ${socket.id} has left the chat.`);
     });
 });
 
