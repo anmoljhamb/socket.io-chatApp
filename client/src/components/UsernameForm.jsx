@@ -12,6 +12,7 @@ const UsernameForm = ({ username, setUsername, handleOnSubmit }) => {
                 onChange={(e) => {
                     setUsername(e.target.value);
                 }}
+                required
             />
             <button>Submit</button>
         </form>
