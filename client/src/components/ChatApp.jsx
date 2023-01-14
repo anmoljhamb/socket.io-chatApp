@@ -4,13 +4,8 @@ import io from "socket.io-client";
 import { useEffect, useState } from "react";
 import { ServerMessage, UserMessage } from "./Message";
 
-const ChatApp = ({ username }) => {
-    const socket = io("http://localhost:8080", {
-        auth: {
-            username,
-        },
-        autoConnect: false,
-    });
+const ChatApp = ({ socket, username }) => {
+    socket.connect();
 
     const [connected, setConnected] = useState(socket.connected);
     const [messages, setMessages] = useState([]);
@@ -26,6 +21,7 @@ const ChatApp = ({ username }) => {
 
         socket.on("disconnect", () => {
             setConnected(false);
+            // socket.connect();
         });
 
         socket.on("alert", (message) => {
@@ -40,11 +36,6 @@ const ChatApp = ({ username }) => {
             socket.off("connect");
             socket.off("disconnect");
         };
-    });
-
-    useEffect(() => {
-        socket.connect();
-        // eslint-disable-next-lineforEach
     }, []);
 
     const handleOnSubmit = (event) => {
