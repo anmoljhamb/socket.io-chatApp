@@ -1,6 +1,5 @@
 import "./ChatApp.scss";
-import React, { useMemo, useRef } from "react";
-import io from "socket.io-client";
+import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import { ServerMessage, UserMessage } from "./Message";
 
@@ -34,12 +33,12 @@ const ChatApp = ({ socket, username }) => {
             ]);
         });
 
-        socket.on("userMessage", ({ message, user }) => {
+        socket.on("userMessage", (message) => {
+            console.log(message);
             setMessages((prev) => [
                 ...prev,
                 <UserMessage
-                    username={user.username}
-                    self={user.id === socket.id}
+                    self={message.meta.user.id === socket.id}
                     message={message}
                 />,
             ]);

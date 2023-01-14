@@ -8,14 +8,15 @@ const ServerMessage = ({ message }) => {
     );
 };
 
-const UserMessage = ({ username, self, message }) => {
+const UserMessage = ({ message, self }) => {
+    const time = message.meta.time;
     return (
         <div className="message" self={self ? "true" : "false"}>
             <div className="meta">
-                <div className="user">{username}</div>
-                <div className="time">10:15</div>
+                <div className="user">{message.meta.user.username}</div>
+                <div className="time">{`${time.hours}, ${time.date}`}</div>
             </div>
-            <div className="content">{message}</div>
+            <div className="content">{message.content}</div>
         </div>
     );
 };
