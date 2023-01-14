@@ -8,18 +8,14 @@ const ServerMessage = ({ message }) => {
     );
 };
 
-const UserMessage = () => {
+const UserMessage = ({ username, self, message }) => {
     return (
-        <div className="message" self="true">
+        <div className="message" self={self ? "true" : "false"}>
             <div className="meta">
-                <div className="user">Paul Singh</div>
+                <div className="user">{username}</div>
                 <div className="time">10:15</div>
             </div>
-            <div className="content">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
-                cumque nemo animi neque officia assumenda obcaecati dolorum
-                magni incidunt distinctio!
-            </div>
+            <div className="content">{message}</div>
         </div>
     );
 };

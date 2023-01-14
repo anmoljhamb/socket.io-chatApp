@@ -12,9 +12,10 @@ const ChatApp = ({ socket, username }) => {
     const inputRef = useRef();
 
     useEffect(() => {
-        socket.onAny((event, ...args) => {
-            console.log(event, ...args);
-        });
+        // socket.onAny((event, ...args) => {
+        //     console.log(event, ...args);
+        // });
+
         socket.on("connect", () => {
             setConnected(true);
         });
@@ -32,9 +33,22 @@ const ChatApp = ({ socket, username }) => {
             ]);
         });
 
+        socket.on("userMessage", ({ message, user }) => {
+            setMessages((prev) => [
+                ...prev,
+                <UserMessage
+                    username={user.username}
+                    self={user.id === socket.id}
+                    message={message}
+                />,
+            ]);
+        });
+
         return () => {
             socket.off("connect");
             socket.off("disconnect");
+            socket.off("alert");
+            socket.off("userMessage");
         };
     }, []);
 
