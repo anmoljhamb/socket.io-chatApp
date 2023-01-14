@@ -21,9 +21,7 @@ io.use((socket, next) => {
 });
 
 io.on("connection", (socket) => {
-    console.log(`${socket.username} has joined the chat.`);
-
-    socket.emit("alert", "Welcome to the ChatApp");
+    socket.emit("alert", "Welcome to the ChatApp.");
     socket.broadcast.emit("alert", `${socket.username} has joined the chat.`);
 
     socket.on("message", (message) => {
