@@ -8,7 +8,7 @@ function App() {
     const [formFilled, setFormFilled] = useState(false);
     const [username, setUsername] = useState("");
 
-    const socket = io(process.env.REACT_APP_BACKEND_URI, {
+    const socket = io({
         auth: {
             username,
         },

@@ -7,6 +7,6 @@ const cors = require("cors");
 // middlewares.
 app.use(cors());
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "build")));
 
 module.exports = app;
