@@ -20,7 +20,23 @@ io.use((socket, next) => {
     next();
 });
 
+const usersOnline = () => {
+    const users = [];
+    for (let [id, socket] of io.of("/").sockets) {
+        users.push({
+            user: {
+                id,
+                username: socket.username,
+            },
+        });
+    }
+
+    io.emit("users", users);
+};
+
 io.on("connection", (socket) => {
+    usersOnline();
+
     socket.emit("alert", "Welcome to the ChatApp.");
     socket.broadcast.emit("alert", `${socket.username} has joined the chat.`);
 
@@ -43,11 +59,12 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         io.emit("alert", `${socket.username} has left the chat.`);
+        usersOnline();
     });
 
-    socket.onAny((event, ...args) => {
-        console.log(event, ...args);
-    });
+    // socket.onAny((event, ...args) => {
+    //     console.log(event, ...args);
+    // });
 });
 
 server.listen(PORT, () => {
