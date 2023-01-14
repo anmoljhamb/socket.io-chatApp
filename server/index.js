@@ -25,12 +25,19 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("alert", `${socket.username} has joined the chat.`);
 
     socket.on("userMessage", (message) => {
+        const date = new Date();
         io.emit("userMessage", {
-            message,
-            user: {
-                id: socket.id,
-                username: socket.username,
+            meta: {
+                user: {
+                    id: socket.id,
+                    username: socket.username,
+                },
+                time: {
+                    hours: date.toLocaleTimeString(),
+                    date: date.toLocaleDateString(),
+                },
             },
+            content: message,
         });
     });
 
