@@ -28,10 +28,6 @@ io.on("connection", (socket) => {
         io.emit("alert", `${socket.username} has left the chat.`);
     });
 
-    socket.on("userMessage", (message) => {
-        console.log(message);
-    });
-
     socket.onAny((event, ...args) => {
         console.log(event, ...args);
     });
