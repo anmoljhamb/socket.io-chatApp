@@ -6,6 +6,7 @@ import { ServerMessage, UserMessage } from "./Message";
 const ChatApp = ({ socket, username }) => {
     socket.connect();
 
+    const [users, setUsers] = useState([]);
     const [connected, setConnected] = useState(socket.connected);
     const [messages, setMessages] = useState([]);
     const inputRef = useRef();
@@ -15,6 +16,10 @@ const ChatApp = ({ socket, username }) => {
         // socket.onAny((event, ...args) => {
         //     console.log(event, ...args);
         // });
+
+        socket.on("users", (users) => {
+            setUsers(users);
+        });
 
         socket.on("connect", () => {
             setConnected(true);
@@ -49,6 +54,7 @@ const ChatApp = ({ socket, username }) => {
             socket.off("disconnect");
             socket.off("alert");
             socket.off("userMessage");
+            socket.off("users");
         };
     }, []);
 
@@ -90,6 +96,11 @@ const ChatApp = ({ socket, username }) => {
                         <button>Send</button>
                     </form>
                 </div>
+            </div>
+            <div className="online">
+                <p>
+                    Currently Online <span>{users.length}</span>
+                </p>
             </div>
         </>
     );
