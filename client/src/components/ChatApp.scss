@@ -24,6 +24,7 @@ div.chatApp {
         position: relative;
         background-color: var(--primary);
         padding: 1rem;
+        transition: var(--transition);
         div.message {
             background-color: var(--teritary);
             padding: 1rem 3rem;
