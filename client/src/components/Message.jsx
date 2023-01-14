@@ -1,9 +1,9 @@
 import React from "react";
 
-const ServerMessage = () => {
+const ServerMessage = ({ message }) => {
     return (
         <div className="message" server="true">
-            <div className="content">Welcome to the chat!</div>
+            <div className="content">{message}</div>
         </div>
     );
 };

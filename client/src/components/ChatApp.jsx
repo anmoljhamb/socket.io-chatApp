@@ -1,5 +1,5 @@
 import "./ChatApp.scss";
-import React from "react";
+import React, { useMemo, useRef } from "react";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 import { ServerMessage, UserMessage } from "./Message";
@@ -11,7 +11,10 @@ const ChatApp = ({ username }) => {
         },
         autoConnect: false,
     });
+
     const [connected, setConnected] = useState(socket.connected);
+    const messagesRef = useRef();
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         socket.onAny((event, ...args) => {
@@ -25,6 +28,14 @@ const ChatApp = ({ username }) => {
             setConnected(false);
         });
 
+        socket.on("alert", (message) => {
+            console.log(message);
+            setMessages((prev) => [
+                ...prev,
+                <ServerMessage message={message} />,
+            ]);
+        });
+
         return () => {
             socket.off("connect");
             socket.off("disconnect");
@@ -33,8 +44,12 @@ const ChatApp = ({ username }) => {
 
     useEffect(() => {
         socket.connect();
-        // eslint-disable-next-line
+        // eslint-disable-next-lineforEach
     }, []);
+
+    useEffect(() => {
+        console.log(messages);
+    }, [messages]);
 
     return (
         <>
@@ -44,10 +59,14 @@ const ChatApp = ({ username }) => {
                         Chatting As <span className="username">{username}</span>
                     </h1>
                 </div>
-                <div className="messages">
-                    <ServerMessage />
-                    <UserMessage />
-                    <UserMessage />
+                <div className="messages" ref={messagesRef}>
+                    {messages.map((message, index) => {
+                        return (
+                            <React.Fragment key={index}>
+                                {message}
+                            </React.Fragment>
+                        );
+                    })}
                 </div>
                 <div className="sendMessage">
                     <form>
