@@ -10,6 +10,7 @@ const ChatApp = ({ socket, username }) => {
     const [connected, setConnected] = useState(socket.connected);
     const [messages, setMessages] = useState([]);
     const inputRef = useRef();
+    const messagesRef = useRef();
 
     useEffect(() => {
         // socket.onAny((event, ...args) => {
@@ -52,6 +53,10 @@ const ChatApp = ({ socket, username }) => {
         };
     }, []);
 
+    useEffect(() => {
+        messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }, [messages]);
+
     const handleOnSubmit = (event) => {
         event.preventDefault();
 
@@ -71,7 +76,7 @@ const ChatApp = ({ socket, username }) => {
                         Chatting As <span className="username">{username}</span>
                     </h1>
                 </div>
-                <div className="messages">
+                <div className="messages" ref={messagesRef}>
                     {messages.map((message, index) => {
                         return (
                             <React.Fragment key={index}>
