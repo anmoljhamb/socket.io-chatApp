@@ -1,3 +1,4 @@
+import "./ChatApp.scss";
 import React from "react";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
@@ -36,9 +37,88 @@ const ChatApp = ({ username }) => {
 
     return (
         <>
-            <h1>Chatting App</h1>
-            <p>For the user {username}</p>
-            <h1>{connected ? "Connected" : "Not Connected"}</h1>
+            <div className="chatApp">
+                <div className="heading">
+                    <h1>
+                        Chatting As <span className="username">{username}</span>
+                    </h1>
+                </div>
+                <div className="messages">
+                    <div className="message" server="true">
+                        {/* <div className="meta">
+                            <div className="user">Paul Singh</div>
+                            <div className="time">10:15</div>
+                        </div> */}
+                        <div className="content">Welcome to the chat!</div>
+                    </div>
+                    <div className="message" self="true">
+                        <div className="meta">
+                            <div className="user">Paul Singh</div>
+                            <div className="time">10:15</div>
+                        </div>
+                        <div className="content">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Fugiat cumque nemo animi neque officia
+                            assumenda obcaecati dolorum magni incidunt
+                            distinctio!
+                        </div>
+                    </div>
+                    <div className="message" self="false">
+                        <div className="meta">
+                            <div className="user">Paul Singh</div>
+                            <div className="time">10:15</div>
+                        </div>
+                        <div className="content">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Fugiat cumque nemo animi neque officia
+                            assumenda obcaecati dolorum magni incidunt
+                            distinctio!
+                        </div>
+                    </div>
+                    <div className="message" self="false">
+                        <div className="meta">
+                            <div className="user">Paul Singh</div>
+                            <div className="time">10:15</div>
+                        </div>
+                        <div className="content">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Fugiat cumque nemo animi neque officia
+                            assumenda obcaecati dolorum magni incidunt
+                            distinctio!
+                        </div>
+                    </div>
+                    <div className="message" self="false">
+                        <div className="meta">
+                            <div className="user">Paul Singh</div>
+                            <div className="time">10:15</div>
+                        </div>
+                        <div className="content">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Fugiat cumque nemo animi neque officia
+                            assumenda obcaecati dolorum magni incidunt
+                            distinctio!
+                        </div>
+                    </div>
+                    <div className="message" self="false">
+                        <div className="meta">
+                            <div className="user">Paul Singh</div>
+                            <div className="time">10:15</div>
+                        </div>
+                        <div className="content">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Fugiat cumque nemo animi neque officia
+                            assumenda obcaecati dolorum magni incidunt
+                            distinctio!
+                        </div>
+                    </div>
+                </div>
+                <div className="sendMessage">
+                    <form>
+                        <input type="text" />
+                        <button>Send</button>
+                    </form>
+                </div>
+            </div>
         </>
     );
 };

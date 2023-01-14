@@ -1,28 +1,30 @@
 #root {
-    form {
-        background-color: var(--secondary);
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        padding: 2rem 5rem;
-        font-size: 4.2rem;
-        h1 {
-            text-transform: capitalize;
-        }
-        input {
-            padding: 1rem;
-            margin: 1rem 0rem;
-            font-size: 3rem;
-            text-align: center;
-        }
-        button {
-            width: 100%;
-            padding: 1rem 2rem;
-            font-size: 3rem;
-            background-color: var(--teritary);
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
+    .userNameForm {
+        form {
+            background-color: var(--secondary);
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 2rem 5rem;
+            font-size: 4.2rem;
+            h1 {
+                text-transform: capitalize;
+            }
+            input {
+                padding: 1rem;
+                margin: 1rem 0rem;
+                font-size: 3rem;
+                text-align: center;
+            }
+            button {
+                width: 100%;
+                padding: 1rem 2rem;
+                font-size: 3rem;
+                background-color: var(--teritary);
+                font-weight: bold;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
         }
     }
 }

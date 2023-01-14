@@ -1,0 +1,83 @@
+div.chatApp {
+    padding: 1rem 5rem;
+    background-color: var(--secondary);
+    color: var(--teritary);
+    font-size: 2.2rem;
+    div.heading {
+        background-color: var(--teritary);
+        color: var(--primary);
+        text-transform: capitalize;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        font-size: 3rem;
+        text-align: center;
+        h1 {
+            span.username {
+                color: var(--secondary);
+            }
+        }
+    }
+    div.messages {
+        height: 50rem;
+        overflow-y: scroll;
+        position: relative;
+        background-color: var(--primary);
+        padding: 1rem;
+        div.message {
+            background-color: var(--teritary);
+            padding: 1rem 3rem;
+            margin: 1rem;
+            text-align: left;
+            width: 70%;
+            margin-right: auto;
+            margin-left: 0;
+            color: var(--primary);
+            &[self="true"] {
+                margin-left: auto;
+                margin-right: 0;
+            }
+            &[server="true"] {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+            div.meta {
+                display: flex;
+                div.user {
+                    font-weight: bold;
+                    margin-right: 0.5rem;
+                }
+                div.time {
+                }
+            }
+            div.content {
+            }
+        }
+    }
+    div.sendMessage {
+        form {
+            height: 5rem;
+            width: 100%;
+            display: flex;
+            margin-top: 1rem;
+            justify-content: center;
+            align-content: center;
+            font-size: 2.2rem;
+            input {
+                padding: 1rem;
+                font-size: 2.2rem;
+                flex: 6;
+            }
+            button {
+                background-color: var(--primary);
+                color: var(--teritary);
+                text-transform: uppercase;
+                font-weight: bold;
+                font-size: 2.2rem;
+                flex: 1;
+            }
+        }
+    }
+}
