@@ -13,8 +13,8 @@ const ChatApp = ({ username }) => {
     });
 
     const [connected, setConnected] = useState(socket.connected);
-    const messagesRef = useRef();
     const [messages, setMessages] = useState([]);
+    const inputRef = useRef();
 
     useEffect(() => {
         socket.onAny((event, ...args) => {
@@ -47,9 +47,16 @@ const ChatApp = ({ username }) => {
         // eslint-disable-next-lineforEach
     }, []);
 
-    useEffect(() => {
-        console.log(messages);
-    }, [messages]);
+    const handleOnSubmit = (event) => {
+        event.preventDefault();
+
+        console.log("onFormSubmit", socket);
+
+        socket.emit("userMessage", inputRef.current.value);
+
+        inputRef.current.value = "";
+        inputRef.current.focus();
+    };
 
     return (
         <>
@@ -59,7 +66,7 @@ const ChatApp = ({ username }) => {
                         Chatting As <span className="username">{username}</span>
                     </h1>
                 </div>
-                <div className="messages" ref={messagesRef}>
+                <div className="messages">
                     {messages.map((message, index) => {
                         return (
                             <React.Fragment key={index}>
@@ -69,8 +76,8 @@ const ChatApp = ({ username }) => {
                     })}
                 </div>
                 <div className="sendMessage">
-                    <form>
-                        <input type="text" />
+                    <form onSubmit={handleOnSubmit}>
+                        <input type="text" ref={inputRef} />
                         <button>Send</button>
                     </form>
                 </div>
