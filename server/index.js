@@ -24,6 +24,16 @@ io.on("connection", (socket) => {
     socket.emit("alert", "Welcome to the ChatApp.");
     socket.broadcast.emit("alert", `${socket.username} has joined the chat.`);
 
+    socket.on("userMessage", (message) => {
+        io.emit("userMessage", {
+            message,
+            user: {
+                id: socket.id,
+                username: socket.username,
+            },
+        });
+    });
+
     socket.on("disconnect", () => {
         io.emit("alert", `${socket.username} has left the chat.`);
     });
