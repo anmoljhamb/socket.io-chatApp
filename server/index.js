@@ -24,13 +24,12 @@ io.on("connection", (socket) => {
     socket.emit("alert", "Welcome to the ChatApp.");
     socket.broadcast.emit("alert", `${socket.username} has joined the chat.`);
 
-    socket.on("message", (message) => {
-        console.log(message);
-        // io.emit("message", message, { username: socket.username });
-    });
-
     socket.on("disconnect", () => {
         io.emit("alert", `${socket.username} has left the chat.`);
+    });
+
+    socket.on("userMessage", (message) => {
+        console.log(message);
     });
 
     socket.onAny((event, ...args) => {
