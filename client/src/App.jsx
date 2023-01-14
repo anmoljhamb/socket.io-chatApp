@@ -8,12 +8,15 @@ function App() {
     const [formFilled, setFormFilled] = useState(false);
     const [username, setUsername] = useState("");
 
-    const socket = io(process.env.REACT_APP_BACKEND_URI, {
-        auth: {
-            username,
-        },
-        autoConnect: false,
-    });
+    const socket = io(
+        `${process.env.REACT_APP_BACKEND_URI}:${process.env.PORT}`,
+        {
+            auth: {
+                username,
+            },
+            autoConnect: false,
+        }
+    );
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
