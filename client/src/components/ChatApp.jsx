@@ -2,6 +2,7 @@ import "./ChatApp.scss";
 import React from "react";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
+import { ServerMessage, UserMessage } from "./Message";
 
 const ChatApp = ({ username }) => {
     const socket = io("http://localhost:8080", {
@@ -44,73 +45,9 @@ const ChatApp = ({ username }) => {
                     </h1>
                 </div>
                 <div className="messages">
-                    <div className="message" server="true">
-                        {/* <div className="meta">
-                            <div className="user">Paul Singh</div>
-                            <div className="time">10:15</div>
-                        </div> */}
-                        <div className="content">Welcome to the chat!</div>
-                    </div>
-                    <div className="message" self="true">
-                        <div className="meta">
-                            <div className="user">Paul Singh</div>
-                            <div className="time">10:15</div>
-                        </div>
-                        <div className="content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Fugiat cumque nemo animi neque officia
-                            assumenda obcaecati dolorum magni incidunt
-                            distinctio!
-                        </div>
-                    </div>
-                    <div className="message" self="false">
-                        <div className="meta">
-                            <div className="user">Paul Singh</div>
-                            <div className="time">10:15</div>
-                        </div>
-                        <div className="content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Fugiat cumque nemo animi neque officia
-                            assumenda obcaecati dolorum magni incidunt
-                            distinctio!
-                        </div>
-                    </div>
-                    <div className="message" self="false">
-                        <div className="meta">
-                            <div className="user">Paul Singh</div>
-                            <div className="time">10:15</div>
-                        </div>
-                        <div className="content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Fugiat cumque nemo animi neque officia
-                            assumenda obcaecati dolorum magni incidunt
-                            distinctio!
-                        </div>
-                    </div>
-                    <div className="message" self="false">
-                        <div className="meta">
-                            <div className="user">Paul Singh</div>
-                            <div className="time">10:15</div>
-                        </div>
-                        <div className="content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Fugiat cumque nemo animi neque officia
-                            assumenda obcaecati dolorum magni incidunt
-                            distinctio!
-                        </div>
-                    </div>
-                    <div className="message" self="false">
-                        <div className="meta">
-                            <div className="user">Paul Singh</div>
-                            <div className="time">10:15</div>
-                        </div>
-                        <div className="content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Fugiat cumque nemo animi neque officia
-                            assumenda obcaecati dolorum magni incidunt
-                            distinctio!
-                        </div>
-                    </div>
+                    <ServerMessage />
+                    <UserMessage />
+                    <UserMessage />
                 </div>
                 <div className="sendMessage">
                     <form>
