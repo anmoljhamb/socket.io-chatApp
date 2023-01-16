@@ -1,6 +1,8 @@
 import React from "react";
 
-const UsernameForm = ({ username, setUsername, handleOnSubmit }) => {
+const UsernameForm = ({ usernameState, handleOnSubmit }) => {
+    const [username, setUsername] = usernameState;
+
     return (
         <div className="userNameForm">
             <form onSubmit={handleOnSubmit}>

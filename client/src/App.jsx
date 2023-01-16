@@ -26,8 +26,7 @@ function App() {
         return (
             <>
                 <UsernameForm
-                    username={username}
-                    setUsername={setUsername}
+                    usernameState={[username, setUsername]}
                     handleOnSubmit={handleOnSubmit}
                 />
             </>
