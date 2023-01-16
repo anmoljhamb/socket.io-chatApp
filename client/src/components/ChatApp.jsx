@@ -13,6 +13,7 @@ const ChatApp = ({ socket, username }) => {
     const messagesRef = useRef();
 
     useEffect(() => {
+        console.log(`connected: ${connected}`);
         // socket.onAny((event, ...args) => {
         //     console.log(event, ...args);
         // });object
@@ -57,6 +58,7 @@ const ChatApp = ({ socket, username }) => {
             socket.off("userMessage");
             socket.off("users");
         };
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
