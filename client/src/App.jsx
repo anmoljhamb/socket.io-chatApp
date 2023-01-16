@@ -3,6 +3,7 @@ import { useState } from "react";
 import UsernameForm from "./components/UsernameForm";
 import ChatApp from "./components/ChatApp";
 import io from "socket.io-client";
+import { useEffect } from "react";
 
 function App() {
     const [formFilled, setFormFilled] = useState(false);
@@ -16,6 +17,13 @@ function App() {
         },
         autoConnect: false,
     });
+
+    useEffect(() => {
+        const currentUrl = window.location.href;
+        const exp = new RegExp(/https?:\/\/([a-zA-Z0-9.]+):[0-9]+/);
+        setServer(exp.exec(currentUrl)[1]);
+        // 10.7.13.225
+    }, []);
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
