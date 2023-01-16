@@ -12,6 +12,7 @@ const ChatApp = ({ socket, username }) => {
     const [messages, setMessages] = useState([]);
     const inputRef = useRef();
     const messagesRef = useRef();
+    const [showToggle, setShowToggle] = useState(false);
 
     useEffect(() => {
         console.log(`connected: ${connected}`);
@@ -77,6 +78,12 @@ const ChatApp = ({ socket, username }) => {
         inputRef.current.focus();
     };
 
+    const handleOnToggle = () => {
+        setShowToggle((prev) => {
+            return !prev;
+        });
+    };
+
     return (
         <>
             <div className="chatApp">
@@ -101,11 +108,11 @@ const ChatApp = ({ socket, username }) => {
                     </form>
                 </div>
             </div>
-            <div className="online" hide="true">
+            <div className="online" hide={showToggle ? "true" : "false"}>
                 <p>
                     Currently Online <span>{users.length}</span>
                 </p>
-                <span className="toogle">
+                <span className="toogle" onClick={handleOnToggle}>
                     <AiFillCaretDown />
                 </span>
 

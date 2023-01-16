@@ -84,6 +84,7 @@ div.chatApp {
     }
 }
 div.online {
+    transition: var(--transition);
     padding: 1rem 3rem;
     overflow-y: auto;
     position: absolute;
