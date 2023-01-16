@@ -95,7 +95,20 @@ div.online {
     background-color: var(--teritary);
     font-size: 2.2rem;
     color: var(--primary);
+    &[hide="true"] {
+        transform: translateY(calc(100% - 7rem));
+        span.toogle {
+            transform: scaleY(-1);
+        }
+    }
+    &[hide="false"] {
+        transform: translateY(0);
+        span.toogle {
+            transform: scaleY(1);
+        }
+    }
     p {
+        text-transform: uppercase;
         span {
             font-weight: bold;
             position: relative;
@@ -110,6 +123,15 @@ div.online {
                 background-color: green;
             }
         }
+    }
+    span.toogle {
+        width: 100%;
+        text-align: center;
+        font-size: 3.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
     }
     .users {
         width: 100%;

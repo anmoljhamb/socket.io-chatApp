@@ -2,6 +2,7 @@ import "./ChatApp.scss";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import { ServerMessage, UserMessage } from "./Message";
+import { AiFillCaretDown } from "react-icons/ai";
 
 const ChatApp = ({ socket, username }) => {
     socket.connect();
@@ -100,10 +101,14 @@ const ChatApp = ({ socket, username }) => {
                     </form>
                 </div>
             </div>
-            <div className="online">
+            <div className="online" hide="true">
                 <p>
                     Currently Online <span>{users.length}</span>
                 </p>
+                <span className="toogle">
+                    <AiFillCaretDown />
+                </span>
+
                 <div className="users">
                     {users.map(({ user }) => {
                         return (
