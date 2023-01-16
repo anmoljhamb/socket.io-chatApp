@@ -15,10 +15,11 @@ const ChatApp = ({ socket, username }) => {
     useEffect(() => {
         // socket.onAny((event, ...args) => {
         //     console.log(event, ...args);
-        // });
+        // });object
 
         socket.on("users", (users) => {
             setUsers(users);
+            console.log(users);
         });
 
         socket.on("connect", () => {
@@ -27,7 +28,7 @@ const ChatApp = ({ socket, username }) => {
 
         socket.on("disconnect", () => {
             setConnected(false);
-            // socket.connect();
+            socket.connect();
         });
 
         socket.on("alert", (message) => {
@@ -101,6 +102,15 @@ const ChatApp = ({ socket, username }) => {
                 <p>
                     Currently Online <span>{users.length}</span>
                 </p>
+                <div className="users">
+                    {users.map(({ user }) => {
+                        return (
+                            <div className="user" key={user.id}>
+                                <p>{user.username}</p>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </>
     );
