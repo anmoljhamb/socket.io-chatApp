@@ -22,7 +22,9 @@ function App() {
         const currentUrl = window.location.href;
         const exp = new RegExp(/https?:\/\/([a-zA-Z0-9.]+):[0-9]+/);
         setServer(exp.exec(currentUrl)[1]);
-        // 10.7.13.225
+        /**
+         * for example, the local ip address is 10.7.13.225, the client will be hosted on the url http://10.7.13.225:3000, so the regex will automatically get the 10.7.13.225 from the given url.
+         */
     }, []);
 
     const handleOnSubmit = (event) => {
