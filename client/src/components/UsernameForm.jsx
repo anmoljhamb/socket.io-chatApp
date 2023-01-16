@@ -1,6 +1,15 @@
 import React from "react";
 
-const UsernameForm = ({ username, setUsername, handleOnSubmit }) => {
+const UsernameForm = ({
+    usernameState,
+    serverState,
+    portState,
+    handleOnSubmit,
+}) => {
+    const [username, setUsername] = usernameState;
+    const [server, setServer] = serverState;
+    const [port, setPort] = portState;
+
     return (
         <div className="userNameForm">
             <form onSubmit={handleOnSubmit}>
@@ -15,7 +24,31 @@ const UsernameForm = ({ username, setUsername, handleOnSubmit }) => {
                     }}
                     required
                 />
-                <button>Submit</button>
+                <div className="server">
+                    <input
+                        type="text"
+                        name="server"
+                        placeholder="Server"
+                        value={server}
+                        onChange={(e) => {
+                            setServer(e.target.value);
+                        }}
+                        required
+                    />
+                    <input
+                        min={0}
+                        max={65536}
+                        type="number"
+                        name="port"
+                        placeholder="Port"
+                        value={port}
+                        onChange={(e) => {
+                            setPort(e.target.value);
+                        }}
+                        required
+                    />
+                </div>
+                <button>Connect</button>
             </form>
         </div>
     );

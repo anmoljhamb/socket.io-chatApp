@@ -16,6 +16,17 @@
                 font-size: 3rem;
                 text-align: center;
             }
+            .server {
+                display: flex;
+                input {
+                    &:first-child {
+                        flex: 3;
+                    }
+                    &:last-child {
+                        flex: 1;
+                    }
+                }
+            }
             button {
                 width: 100%;
                 padding: 1rem 2rem;
