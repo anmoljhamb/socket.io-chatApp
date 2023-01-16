@@ -12,7 +12,7 @@ const ChatApp = ({ socket, username }) => {
     const [messages, setMessages] = useState([]);
     const inputRef = useRef();
     const messagesRef = useRef();
-    const [showToggle, setShowToggle] = useState(false);
+    const [showToggle, setShowToggle] = useState(true);
 
     useEffect(() => {
         console.log(`connected: ${connected}`);
