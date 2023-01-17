@@ -8,6 +8,14 @@ const ServerMessage = ({ message }) => {
     );
 };
 
+const TypingMessage = ({ user, typing }) => {
+    return (
+        <div className="message" typing={typing ? "true" : "false"}>
+            {user} is typing.
+        </div>
+    );
+};
+
 const UserMessage = ({ message, self }) => {
     const time = message.meta.time;
     return (
@@ -21,4 +29,4 @@ const UserMessage = ({ message, self }) => {
     );
 };
 
-export { UserMessage, ServerMessage };
+export { UserMessage, ServerMessage, TypingMessage };

@@ -1,7 +1,7 @@
 import "./ChatApp.scss";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
-import { ServerMessage, UserMessage } from "./Message";
+import { ServerMessage, TypingMessage, UserMessage } from "./Message";
 import { AiFillCaretDown } from "react-icons/ai";
 
 const ChatApp = ({ socket, username }) => {
@@ -13,6 +13,8 @@ const ChatApp = ({ socket, username }) => {
     const inputRef = useRef();
     const messagesRef = useRef();
     const [showToggle, setShowToggle] = useState(false);
+    const [typing, setTyping] = useState(false);
+    const isTyping = useRef(false);
 
     useEffect(() => {
         console.log(`connected: ${connected}`);
@@ -22,7 +24,7 @@ const ChatApp = ({ socket, username }) => {
 
         socket.on("users", (users) => {
             setUsers(users);
-            console.log(users);
+            // console.log(users);
         });
 
         socket.on("connect", () => {
@@ -35,7 +37,7 @@ const ChatApp = ({ socket, username }) => {
         });
 
         socket.on("alert", (message) => {
-            console.log(message);
+            // console.log(message);
             setMessages((prev) => [
                 ...prev,
                 <ServerMessage message={message} />,
@@ -43,7 +45,7 @@ const ChatApp = ({ socket, username }) => {
         });
 
         socket.on("userMessage", (message) => {
-            console.log(message);
+            // console.log(message);
             setMessages((prev) => [
                 ...prev,
                 <UserMessage
@@ -54,7 +56,15 @@ const ChatApp = ({ socket, username }) => {
         });
 
         socket.on("typing", (user) => {
-            console.log(`user ${user.username} is typing.`);
+            setTyping(true);
+            // setTimeout(() => {
+            //     setTyping(false);
+            // }, 10);
+        });
+
+        socket.on("typingDone", (user) => {
+            // console.log("got on typing done");
+            setTyping(false);
         });
 
         return () => {
@@ -63,6 +73,7 @@ const ChatApp = ({ socket, username }) => {
             socket.off("alert");
             socket.off("userMessage");
             socket.off("users");
+            socket.off("typing");
         };
         // eslint-disable-next-line
     }, []);
@@ -71,25 +82,49 @@ const ChatApp = ({ socket, username }) => {
         messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }, [messages]);
 
-    const handleOnSubmit = (event) => {
-        event.preventDefault();
-
-        console.log("onFormSubmit", socket);
-
-        socket.emit("userMessage", inputRef.current.value);
-
-        inputRef.current.value = "";
-        inputRef.current.focus();
-    };
-
     const handleOnToggle = () => {
         setShowToggle((prev) => {
             return !prev;
         });
     };
 
+    let checkIfTypingTimeout = null;
+
+    const handleOnKeyUp = () => {
+        isTyping.current = false;
+        if (!checkIfTypingTimeout) {
+            checkIfTypingTimeout = setTimeout(() => {
+                if (!isTyping.current) {
+                    // user hasn't clicked a key even after the 1.5s of pressesing the previous key. Must not be typing.
+                    socket.emit("typingDone", { id: socket.id });
+                }
+            }, 1000);
+        }
+    };
+
     const handleOnKeyDown = () => {
+        isTyping.current = true;
+        if (checkIfTypingTimeout) {
+            clearTimeout(checkIfTypingTimeout);
+            checkIfTypingTimeout = null;
+        }
         socket.emit("typing", { id: socket.id });
+    };
+
+    const handleOnSubmit = (event) => {
+        event.preventDefault();
+        isTyping.current = false;
+        if (checkIfTypingTimeout) {
+            clearTimeout(checkIfTypingTimeout);
+            checkIfTypingTimeout = null;
+        }
+        socket.emit("typingDone", { id: socket.id });
+        console.log("onFormSubmit", socket);
+
+        socket.emit("userMessage", inputRef.current.value);
+
+        inputRef.current.value = "";
+        inputRef.current.focus();
     };
 
     return (
@@ -108,6 +143,7 @@ const ChatApp = ({ socket, username }) => {
                             </React.Fragment>
                         );
                     })}
+                    <TypingMessage user={"anmol"} typing={typing} />
                 </div>
                 <div className="sendMessage">
                     <form onSubmit={handleOnSubmit}>
@@ -115,6 +151,7 @@ const ChatApp = ({ socket, username }) => {
                             type="text"
                             ref={inputRef}
                             onKeyDown={handleOnKeyDown}
+                            onKeyUp={handleOnKeyUp}
                         />
                         <button>Send</button>
                     </form>
