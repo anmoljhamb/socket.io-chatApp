@@ -15,6 +15,7 @@ const ChatApp = ({ socket, username }) => {
     const [showToggle, setShowToggle] = useState(false);
     const [typing, setTyping] = useState(false);
     const isTyping = useRef(false);
+    const [typingUser, setTypingUser] = useState("");
 
     useEffect(() => {
         console.log(`connected: ${connected}`);
@@ -56,14 +57,12 @@ const ChatApp = ({ socket, username }) => {
         });
 
         socket.on("typing", (user) => {
+            setTypingUser(user.username);
             setTyping(true);
-            // setTimeout(() => {
-            //     setTyping(false);
-            // }, 10);
         });
 
         socket.on("typingDone", (user) => {
-            // console.log("got on typing done");
+            setTypingUser("");
             setTyping(false);
         });
 
@@ -143,7 +142,7 @@ const ChatApp = ({ socket, username }) => {
                             </React.Fragment>
                         );
                     })}
-                    <TypingMessage user={"anmol"} typing={typing} />
+                    <TypingMessage user={typingUser} typing={typing} />
                 </div>
                 <div className="sendMessage">
                     <form onSubmit={handleOnSubmit}>
