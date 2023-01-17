@@ -12,7 +12,7 @@ const ChatApp = ({ socket, username }) => {
     const [messages, setMessages] = useState([]);
     const inputRef = useRef();
     const messagesRef = useRef();
-    const [showToggle, setShowToggle] = useState(true);
+    const [showToggle, setShowToggle] = useState(false);
 
     useEffect(() => {
         console.log(`connected: ${connected}`);
@@ -108,7 +108,7 @@ const ChatApp = ({ socket, username }) => {
                     </form>
                 </div>
             </div>
-            <div className="online" hide={showToggle ? "true" : "false"}>
+            <div className="online" hide={showToggle ? "false" : "true"}>
                 <p>
                     Currently Online <span>{users.length}</span>
                 </p>
