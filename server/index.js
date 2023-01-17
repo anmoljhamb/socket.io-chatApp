@@ -69,6 +69,13 @@ io.on("connection", (socket) => {
         });
     });
 
+    socket.on("typingDone", (id) => {
+        socket.broadcast.emit("typingDone", {
+            username: socket.username,
+            id: socket.id,
+        });
+    });
+
     // socket.onAny((event, ...args) => {
     //     console.log(event, ...args);
     // });
