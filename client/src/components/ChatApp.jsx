@@ -53,6 +53,10 @@ const ChatApp = ({ socket, username }) => {
             ]);
         });
 
+        socket.on("typing", (user) => {
+            console.log(`user ${user.username} is typing.`);
+        });
+
         return () => {
             socket.off("connect");
             socket.off("disconnect");
@@ -84,6 +88,10 @@ const ChatApp = ({ socket, username }) => {
         });
     };
 
+    const handleOnKeyDown = () => {
+        socket.emit("typing", { id: socket.id });
+    };
+
     return (
         <>
             <div className="chatApp">
@@ -103,7 +111,11 @@ const ChatApp = ({ socket, username }) => {
                 </div>
                 <div className="sendMessage">
                     <form onSubmit={handleOnSubmit}>
-                        <input type="text" ref={inputRef} />
+                        <input
+                            type="text"
+                            ref={inputRef}
+                            onKeyDown={handleOnKeyDown}
+                        />
                         <button>Send</button>
                     </form>
                 </div>
