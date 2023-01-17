@@ -58,6 +58,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("disconnect", () => {
+        socket.broadcast.emit("typingDone", { id: socket.id });
         io.emit("alert", `${socket.username} has left the chat.`);
         usersOnline();
     });
