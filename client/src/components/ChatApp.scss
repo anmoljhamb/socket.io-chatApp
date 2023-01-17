@@ -35,6 +35,7 @@ div.chatApp {
             margin-left: 0;
             color: var(--primary);
             &[typing="true"] {
+                font-weight: bold;
                 display: block;
             }
             &[typing="false"] {

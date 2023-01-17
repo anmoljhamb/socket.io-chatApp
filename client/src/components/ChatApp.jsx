@@ -73,6 +73,7 @@ const ChatApp = ({ socket, username }) => {
             socket.off("userMessage");
             socket.off("users");
             socket.off("typing");
+            socket.off("typingDone");
         };
         // eslint-disable-next-line
     }, []);
