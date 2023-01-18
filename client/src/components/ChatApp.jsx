@@ -91,6 +91,11 @@ const ChatApp = ({ socket, username }) => {
         messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }, [messages]);
 
+    useEffect(() => {
+        messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+        console.log("useEffect on isTyping");
+    }, [typing]);
+
     const handleOnToggle = () => {
         setShowToggle((prev) => {
             return !prev;
