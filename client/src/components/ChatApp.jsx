@@ -19,7 +19,6 @@ const ChatApp = ({ socket, username }) => {
     const [typingUser, setTypingUser] = useState("");
 
     useEffect(() => {
-        console.log(`connected: ${connected}`);
         // socket.onAny((event, ...args) => {
         //     console.log(event, ...args);
         // });
