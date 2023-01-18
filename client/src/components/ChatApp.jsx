@@ -34,6 +34,12 @@ const ChatApp = ({ socket, username }) => {
 
         socket.on("disconnect", () => {
             setConnected(false);
+            console.log("socket.connect called.");
+            socket.connect();
+        });
+
+        socket.on("error", function () {
+            console.log("socket on error.");
             socket.connect();
         });
 
@@ -59,8 +65,6 @@ const ChatApp = ({ socket, username }) => {
         socket.on("typing", (typingUsers) => {
             let typingUsersMap = new Map(JSON.parse(typingUsers));
             typingUsersMap.delete(socket.id);
-
-            console.log(typingUsersMap);
 
             if (typingUsersMap.size === 0) {
                 setTypingUser("");
@@ -102,11 +106,7 @@ const ChatApp = ({ socket, username }) => {
 
     useEffect(() => {
         messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-    }, [messages]);
-
-    useEffect(() => {
-        messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-    }, [typing]);
+    }, [messages, typing]);
 
     let checkIfTypingTimeout = null;
 
@@ -139,7 +139,6 @@ const ChatApp = ({ socket, username }) => {
             checkIfTypingTimeout = null;
         }
         socket.emit("typingDone", { id: socket.id });
-        console.log("onFormSubmit", socket);
 
         socket.emit("userMessage", inputRef.current.value);
 
@@ -161,6 +160,16 @@ const ChatApp = ({ socket, username }) => {
                 handleOnKeyUp={handleOnKeyUp}
             />
             <OnlineUsers users={users} />
+            <div className="connected">
+                <h1>
+                    Connection Status:{" "}
+                    {connected && <span className="connected">Connected</span>}
+                    {!connected && (
+                        <span className="notConnected">Not Connected</span>
+                    )}
+                </h1>
+                {!connected && <p>Connecting to the server ...</p>}
+            </div>
         </>
     );
 };

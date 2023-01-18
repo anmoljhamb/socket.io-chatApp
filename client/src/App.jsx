@@ -16,6 +16,8 @@ function App() {
             username,
         },
         autoConnect: false,
+        reconnection: true,
+        reconnectionDelay: 500,
     });
 
     useEffect(() => {
