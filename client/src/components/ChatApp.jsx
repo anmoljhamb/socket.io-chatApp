@@ -1,8 +1,9 @@
+import { Messages } from "./Messages";
 import { OnlineUsers } from "./OnlineUsers";
 import "./ChatApp.scss";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
-import { ServerMessage, TypingMessage, UserMessage } from "./Message";
+import { ServerMessage, UserMessage } from "./Message";
 
 const ChatApp = ({ socket, username }) => {
     socket.connect();
@@ -148,34 +149,17 @@ const ChatApp = ({ socket, username }) => {
 
     return (
         <>
-            <div className="chatApp">
-                <div className="heading">
-                    <h1>
-                        Chatting As <span className="username">{username}</span>
-                    </h1>
-                </div>
-                <div className="messages" ref={messagesRef}>
-                    {messages.map((message, index) => {
-                        return (
-                            <React.Fragment key={index}>
-                                {message}
-                            </React.Fragment>
-                        );
-                    })}
-                    <TypingMessage user={typingUser} typing={typing} />
-                </div>
-                <div className="sendMessage">
-                    <form onSubmit={handleOnSubmit}>
-                        <input
-                            type="text"
-                            ref={inputRef}
-                            onKeyDown={handleOnKeyDown}
-                            onKeyUp={handleOnKeyUp}
-                        />
-                        <button>Send</button>
-                    </form>
-                </div>
-            </div>
+            <Messages
+                username={username}
+                messagesRef={messagesRef}
+                messages={messages}
+                typingUser={typingUser}
+                typing={typing}
+                handleOnSubmit={handleOnSubmit}
+                inputRef={inputRef}
+                handleOnKeyDown={handleOnKeyDown}
+                handleOnKeyUp={handleOnKeyUp}
+            />
             <OnlineUsers users={users} />
         </>
     );
