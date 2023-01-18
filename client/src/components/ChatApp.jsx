@@ -21,7 +21,7 @@ const ChatApp = ({ socket, username }) => {
         console.log(`connected: ${connected}`);
         // socket.onAny((event, ...args) => {
         //     console.log(event, ...args);
-        // });object
+        // });
 
         socket.on("users", (users) => {
             setUsers(users);
@@ -56,12 +56,16 @@ const ChatApp = ({ socket, username }) => {
             ]);
         });
 
-        socket.on("typing", (user) => {
-            setTypingUser(user.username);
+        socket.on("typing", (typingUsers) => {
+            typingUsers = new Map(JSON.parse(typingUsers));
+            console.log(typingUsers);
+            setTypingUser("somebody");
             setTyping(true);
         });
 
-        socket.on("typingDone", (user) => {
+        socket.on("typingDone", (typingUsers) => {
+            typingUsers = new Map(JSON.parse(typingUsers));
+            console.log(typingUsers);
             setTypingUser("");
             setTyping(false);
         });
