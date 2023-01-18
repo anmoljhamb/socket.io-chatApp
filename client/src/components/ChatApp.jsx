@@ -62,25 +62,29 @@ const ChatApp = ({ socket, username }) => {
 
             console.log(typingUsersMap);
 
-            if (typingUsersMap.size > 0) {
+            if (typingUsersMap.size === 0) {
+                setTypingUser("");
+                setTyping(false);
+            } else {
                 let typingString = "";
 
                 if (typingUsersMap.size === 1) {
                     typingString = typingUsersMap.entries().next().value[1][
                         "username"
                     ];
-                    console.log(typingString);
                 } else {
-                    typingString = "Multiple Users are typing.";
+                    const user = typingUsersMap.entries().next().value[1][
+                        "username"
+                    ];
+                    typingString = `${user} and ${
+                        typingUsersMap.size - 1
+                    } other ${
+                        typingUsersMap.size - 2 > 0 ? "users" : "user"
+                    } are typing.`;
                 }
 
                 setTypingUser(typingString);
                 setTyping(true);
-            }
-
-            if (typingUsersMap.size === 0) {
-                setTypingUser("");
-                setTyping(false);
             }
         });
 
@@ -102,7 +106,6 @@ const ChatApp = ({ socket, username }) => {
 
     useEffect(() => {
         messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-        console.log("useEffect on isTyping");
     }, [typing]);
 
     const handleOnToggle = () => {
