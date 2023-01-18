@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         typingUsers.delete(socket.id);
-        io.emit("typingDone", emitMap(typingUsers));
+        io.emit("typing", emitMap(typingUsers));
         io.emit("alert", `${socket.username} has left the chat.`);
         usersOnline();
     });
@@ -74,7 +74,7 @@ io.on("connection", (socket) => {
 
     socket.on("typingDone", ({ id }) => {
         typingUsers.delete(id);
-        io.emit("typingDone", emitMap(typingUsers));
+        io.emit("typing", emitMap(typingUsers));
     });
 
     // socket.onAny((event, ...args) => {
