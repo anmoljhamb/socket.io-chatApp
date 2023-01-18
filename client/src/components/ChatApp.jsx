@@ -1,3 +1,4 @@
+import { ConnectionStatus } from "./ConnectionStatus";
 import { Messages } from "./Messages";
 import { OnlineUsers } from "./OnlineUsers";
 import "./ChatApp.scss";
@@ -160,16 +161,7 @@ const ChatApp = ({ socket, username }) => {
                 handleOnKeyUp={handleOnKeyUp}
             />
             <OnlineUsers users={users} />
-            <div className="connected">
-                <h1>
-                    Connection Status:{" "}
-                    {connected && <span className="connected">Connected</span>}
-                    {!connected && (
-                        <span className="notConnected">Not Connected</span>
-                    )}
-                </h1>
-                {!connected && <p>Connecting to the server ...</p>}
-            </div>
+            <ConnectionStatus connected={connected} />
         </>
     );
 };
