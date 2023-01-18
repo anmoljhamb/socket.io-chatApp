@@ -1,8 +1,8 @@
+import { OnlineUsers } from "./OnlineUsers";
 import "./ChatApp.scss";
 import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import { ServerMessage, TypingMessage, UserMessage } from "./Message";
-import { AiFillCaretDown } from "react-icons/ai";
 
 const ChatApp = ({ socket, username }) => {
     socket.connect();
@@ -12,7 +12,6 @@ const ChatApp = ({ socket, username }) => {
     const [messages, setMessages] = useState([]);
     const inputRef = useRef();
     const messagesRef = useRef();
-    const [showToggle, setShowToggle] = useState(false);
     const [typing, setTyping] = useState(false);
     const isTyping = useRef(false);
     const [typingUser, setTypingUser] = useState("");
@@ -108,12 +107,6 @@ const ChatApp = ({ socket, username }) => {
         messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }, [typing]);
 
-    const handleOnToggle = () => {
-        setShowToggle((prev) => {
-            return !prev;
-        });
-    };
-
     let checkIfTypingTimeout = null;
 
     const handleOnKeyUp = () => {
@@ -183,24 +176,7 @@ const ChatApp = ({ socket, username }) => {
                     </form>
                 </div>
             </div>
-            <div className="online" hide={showToggle ? "false" : "true"}>
-                <p>
-                    Currently Online <span>{users.length}</span>
-                </p>
-                <span className="toogle" onClick={handleOnToggle}>
-                    <AiFillCaretDown />
-                </span>
-
-                <div className="users">
-                    {users.map(({ user }) => {
-                        return (
-                            <div className="user" key={user.id}>
-                                <p>{user.username}</p>
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
+            <OnlineUsers users={users} />
         </>
     );
 };
