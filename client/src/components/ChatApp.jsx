@@ -21,7 +21,7 @@ const ChatApp = ({ socket, username }) => {
         console.log(`connected: ${connected}`);
         // socket.onAny((event, ...args) => {
         //     console.log(event, ...args);
-        // });object
+        // });
 
         socket.on("users", (users) => {
             setUsers(users);
@@ -56,14 +56,37 @@ const ChatApp = ({ socket, username }) => {
             ]);
         });
 
-        socket.on("typing", (user) => {
-            setTypingUser(user.username);
-            setTyping(true);
-        });
+        socket.on("typing", (typingUsers) => {
+            let typingUsersMap = new Map(JSON.parse(typingUsers));
+            typingUsersMap.delete(socket.id);
 
-        socket.on("typingDone", (user) => {
-            setTypingUser("");
-            setTyping(false);
+            console.log(typingUsersMap);
+
+            if (typingUsersMap.size === 0) {
+                setTypingUser("");
+                setTyping(false);
+            } else {
+                let typingString = "";
+
+                if (typingUsersMap.size === 1) {
+                    const user = typingUsersMap.entries().next().value[1][
+                        "username"
+                    ];
+                    typingString = `${user} is typing.`;
+                } else {
+                    const user = typingUsersMap.entries().next().value[1][
+                        "username"
+                    ];
+                    typingString = `${user} and ${
+                        typingUsersMap.size - 1
+                    } other ${
+                        typingUsersMap.size - 2 > 0 ? "users" : "user"
+                    } are typing.`;
+                }
+
+                setTypingUser(typingString);
+                setTyping(true);
+            }
         });
 
         return () => {
@@ -73,7 +96,6 @@ const ChatApp = ({ socket, username }) => {
             socket.off("userMessage");
             socket.off("users");
             socket.off("typing");
-            socket.off("typingDone");
         };
         // eslint-disable-next-line
     }, []);
@@ -81,6 +103,10 @@ const ChatApp = ({ socket, username }) => {
     useEffect(() => {
         messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }, [messages]);
+
+    useEffect(() => {
+        messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }, [typing]);
 
     const handleOnToggle = () => {
         setShowToggle((prev) => {

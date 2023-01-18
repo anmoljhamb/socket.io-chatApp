@@ -20,6 +20,9 @@ io.use((socket, next) => {
     next();
 });
 
+const typingUsers = new Map();
+const emitMap = (map) => JSON.stringify(Array.from(map));
+
 const usersOnline = () => {
     const users = [];
     for (let [id, socket] of io.of("/").sockets) {
@@ -58,23 +61,20 @@ io.on("connection", (socket) => {
     });
 
     socket.on("disconnect", () => {
-        socket.broadcast.emit("typingDone", { id: socket.id });
+        typingUsers.delete(socket.id);
+        io.emit("typing", emitMap(typingUsers));
         io.emit("alert", `${socket.username} has left the chat.`);
         usersOnline();
     });
 
-    socket.on("typing", (id) => {
-        socket.broadcast.emit("typing", {
-            username: socket.username,
-            id: socket.id,
-        });
+    socket.on("typing", ({ id }) => {
+        typingUsers.set(id, { username: socket.username, id: socket.id });
+        io.emit("typing", emitMap(typingUsers));
     });
 
-    socket.on("typingDone", (id) => {
-        socket.broadcast.emit("typingDone", {
-            username: socket.username,
-            id: socket.id,
-        });
+    socket.on("typingDone", ({ id }) => {
+        typingUsers.delete(id);
+        io.emit("typing", emitMap(typingUsers));
     });
 
     // socket.onAny((event, ...args) => {
