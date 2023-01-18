@@ -4,7 +4,7 @@ An app made with Express JS, React, and Socket.Io That allows users to have real
 
 ## Screenshot
 
-![screenshot](./screenshot.png)
+![Screenshot](./screenshot.png)
 
 ## Issues
 
