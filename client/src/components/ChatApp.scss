@@ -21,6 +21,7 @@ div.chatApp {
     div.messages {
         height: 50rem;
         overflow-y: scroll;
+        overflow-x: hidden;
         position: relative;
         background-color: var(--primary);
         padding: 1rem;
@@ -33,6 +34,9 @@ div.chatApp {
             width: 70%;
             margin-right: auto;
             margin-left: 0;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
             color: var(--primary);
             &[typing="true"] {
                 font-weight: bold;
@@ -62,6 +66,8 @@ div.chatApp {
                 }
             }
             div.content {
+                hyphens: auto;
+                overflow-wrap: anywhere;
             }
         }
     }
