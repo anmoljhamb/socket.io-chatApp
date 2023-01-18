@@ -57,10 +57,15 @@ const ChatApp = ({ socket, username }) => {
         });
 
         socket.on("typing", (typingUsers) => {
-            typingUsers = new Map(JSON.parse(typingUsers));
-            console.log(typingUsers);
-            setTypingUser("somebody");
-            setTyping(true);
+            let typingUsersMap = new Map(JSON.parse(typingUsers));
+            typingUsersMap.delete(socket.id);
+
+            console.log(typingUsersMap);
+
+            if (typingUsersMap.size > 0) {
+                setTypingUser("somebody");
+                setTyping(true);
+            }
         });
 
         socket.on("typingDone", (typingUsers) => {
