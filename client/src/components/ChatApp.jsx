@@ -69,9 +69,10 @@ const ChatApp = ({ socket, username }) => {
                 let typingString = "";
 
                 if (typingUsersMap.size === 1) {
-                    typingString = typingUsersMap.entries().next().value[1][
+                    const user = typingUsersMap.entries().next().value[1][
                         "username"
                     ];
+                    typingString = `${user} is typing.`;
                 } else {
                     const user = typingUsersMap.entries().next().value[1][
                         "username"
@@ -95,7 +96,6 @@ const ChatApp = ({ socket, username }) => {
             socket.off("userMessage");
             socket.off("users");
             socket.off("typing");
-            socket.off("typingDone");
         };
         // eslint-disable-next-line
     }, []);

@@ -11,7 +11,7 @@ const ServerMessage = ({ message }) => {
 const TypingMessage = ({ user, typing }) => {
     return (
         <div className="message" typing={typing ? "true" : "false"}>
-            {user} is typing.
+            {user}.
         </div>
     );
 };
