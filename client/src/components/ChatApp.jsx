@@ -63,7 +63,18 @@ const ChatApp = ({ socket, username }) => {
             console.log(typingUsersMap);
 
             if (typingUsersMap.size > 0) {
-                setTypingUser("somebody");
+                let typingString = "";
+
+                if (typingUsersMap.size === 1) {
+                    typingString = typingUsersMap.entries().next().value[1][
+                        "username"
+                    ];
+                    console.log(typingString);
+                } else {
+                    typingString = "Multiple Users are typing.";
+                }
+
+                setTypingUser(typingString);
                 setTyping(true);
             }
 
