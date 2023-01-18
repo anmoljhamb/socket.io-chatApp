@@ -66,13 +66,11 @@ const ChatApp = ({ socket, username }) => {
                 setTypingUser("somebody");
                 setTyping(true);
             }
-        });
 
-        socket.on("typingDone", (typingUsers) => {
-            typingUsers = new Map(JSON.parse(typingUsers));
-            console.log(typingUsers);
-            setTypingUser("");
-            setTyping(false);
+            if (typingUsersMap.size === 0) {
+                setTypingUser("");
+                setTyping(false);
+            }
         });
 
         return () => {
